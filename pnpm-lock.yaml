@@ -55,6 +55,9 @@ devDependencies:
   eslint-config-prettier:
     specifier: ^9.0.0
     version: 9.1.0(eslint@8.57.0)
+  eslint-plugin-prefer-arrow-functions:
+    specifier: ^3.3.2
+    version: 3.3.2(eslint@8.57.0)
   eslint-plugin-prettier:
     specifier: ^5.0.0
     version: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5)
@@ -2343,6 +2346,14 @@ packages:
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.57.0
+    dev: true
+
+  /eslint-plugin-prefer-arrow-functions@3.3.2(eslint@8.57.0):
+    resolution: {integrity: sha512-XRGsga9cK6pZ48IA2PM2PABBlWshRYhkofkQxcWzCM0YlDnal2hrQKsuz0FqtBHimJpgEXGgHUko3KrOayxlOQ==}
+    peerDependencies:
+      eslint: '>=5.0.0'
     dependencies:
       eslint: 8.57.0
     dev: true
