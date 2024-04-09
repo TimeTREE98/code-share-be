@@ -13,7 +13,7 @@ export class AppController {
   @Get('/status')
   @ApiTags('status')
   @ApiOkResponse({ type: StatusResponse })
-  getStatus(): { status: string } {
+  getStatus(): StatusResponse {
     return { status: 'OK' };
   }
 }
