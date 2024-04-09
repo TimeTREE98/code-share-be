@@ -1,13 +1,19 @@
+import { ApiOkResponse, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Controller, Get } from '@nestjs/common';
 
-import { AppService } from './app.service';
+class StatusResponse {
+  @ApiProperty({ type: 'string', example: 'OK' })
+  status: string;
+}
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor() {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('/status')
+  @ApiTags('status')
+  @ApiOkResponse({ type: StatusResponse })
+  getStatus(): { status: string } {
+    return { status: 'OK' };
   }
 }
