@@ -1,7 +1,10 @@
 import { AppController } from './app.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from './entity/user.entity';
 import { WsGateway } from './ws.gateway';
+
+const Entities = [UserEntity];
 
 @Module({
   imports: [
@@ -9,12 +12,14 @@ import { WsGateway } from './ws.gateway';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'code_share_user',
-      password: 'code_share_pw',
+      username: 'code_share_user', // TODO: env variable
+      password: 'code_share_pw', // TODO: env variable
       database: 'code_share',
-      entities: [],
+      entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
+      logging: true,
     }),
+    TypeOrmModule.forFeature(Entities),
   ],
   controllers: [AppController],
   providers: [WsGateway],
