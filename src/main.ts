@@ -3,12 +3,14 @@ import * as session from 'express-session';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import { AppConfigService } from './config/config.service';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
+  const appConfigService = app.get(AppConfigService);
 
   const config = new DocumentBuilder().setTitle('Code Share API').addCookieAuth('connect.sid').build();
   const document = SwaggerModule.createDocument(app, config);
@@ -16,7 +18,7 @@ const bootstrap = async () => {
 
   app.use(
     session({
-      secret: 'abcd1234', // TODO: .env variable
+      secret: appConfigService.sessionSecret,
       resave: false,
       saveUninitialized: false,
       cookie: {
