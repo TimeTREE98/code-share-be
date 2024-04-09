@@ -25,10 +25,13 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/platform-socket.io": "^10.3.7",
     "@nestjs/swagger": "^7.3.1",
+    "@nestjs/typeorm": "^10.0.2",
     "@nestjs/websockets": "^10.3.7",
+    "mysql2": "^3.9.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
