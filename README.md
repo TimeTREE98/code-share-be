@@ -3,14 +3,27 @@
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [sort-imports](https://marketplace.visualstudio.com/items?itemName=amatiasq.sort-imports)
 
-## Installation
-
+## Node Version (lts/iron)
 ```bash
+$ nvm install
+# or
+$ nvm use
+```
+
+## Installation
+```bash
+# If you don't have pnpm, run the comment below
+$ npm i - g pnpm
+
 $ pnpm install
 ```
 
-## Running the app
+## Docker
+```bash
+$ docker-compose up -d
+```
 
+## Running the app
 ```bash
 # development
 $ pnpm run start
@@ -23,7 +36,6 @@ $ pnpm run start:prod
 ```
 
 ## Test
-
 ```bash
 # unit tests
 $ pnpm run test
