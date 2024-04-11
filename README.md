@@ -1,3 +1,8 @@
+# Code Share API
+NestJS
+- MySQL + TypeORM
+- SocketIO
+
 ## Editor Experience Recommendations (VScode)
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
