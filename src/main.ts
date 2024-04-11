@@ -32,6 +32,8 @@ const bootstrap = async () => {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 
-  await app.listen(3000);
+  await app.listen(3000, () => {
+    console.log('Server is running on 3000');
+  });
 };
 bootstrap();
