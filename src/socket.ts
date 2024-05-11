@@ -10,7 +10,8 @@ export default (io: Server) => {
     });
 
     socket.on('code', (data: any) => {
-      socket.emit('code', data);
+      // sender will not receive the message
+      socket.broadcast.emit('code', data);
     });
   });
 };
