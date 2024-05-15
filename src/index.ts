@@ -17,18 +17,25 @@ dotenv.config({
 // variables
 const port = process.env.PORT || 3000;
 const corsOptions: CorsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'https://localhost:3000'],
   credentials: true,
 };
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET as string,
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
+  proxy: true,
+  cookie: {
+    sameSite: 'none',
+    secure: true,
+  },
 });
 
 // express
 const app: Express = express();
 const httpServer: Server = createServer(app);
+
+app.set('trust proxy', 1);
 
 app.use(cors({ ...corsOptions }));
 app.use(sessionMiddleware);
