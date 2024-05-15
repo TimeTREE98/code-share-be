@@ -2,41 +2,49 @@ import { Server, createServer } from 'http';
 import express, { Express, NextFunction, Request, Response, json } from 'express';
 
 import authRouter from './routes/auth.route';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import socket from './socket';
 import { Server as socketServer } from 'socket.io';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import path from 'path';
 
+// dotenv
 dotenv.config({
   path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`),
 });
 
+// variables
 const port = process.env.PORT || 3000;
+const corsOptions: CorsOptions = {
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true,
+};
+const sessionMiddleware = session({
+  secret: process.env.SESSION_SECRET as string,
+  resave: true,
+  saveUninitialized: true,
+});
 
+// express
 const app: Express = express();
-
 const httpServer: Server = createServer(app);
-const io = new socketServer(httpServer, { cors: { origin: '*' } });
 
-socket(io);
+app.use(cors({ ...corsOptions }));
+app.use(sessionMiddleware);
+app.use(json());
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET as string,
-    resave: true,
-    saveUninitialized: true,
-  }),
-);
+app.use('/auth', authRouter);
+
+// socket
+const io = new socketServer(httpServer, { cors: corsOptions });
+
+io.engine.use(sessionMiddleware);
 app.use((req: Request, res: Response, next: NextFunction) => {
   req.io = io;
   next();
 });
-app.use(cors());
-app.use(json());
-
-app.use('/auth', authRouter);
+socket(io);
 
 httpServer.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
