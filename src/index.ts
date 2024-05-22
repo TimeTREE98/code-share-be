@@ -1,13 +1,13 @@
 import { Server, createServer } from 'http';
+import cors, { CorsOptions } from 'cors';
 import express, { Express, NextFunction, Request, Response, json } from 'express';
 
 import authRouter from './routes/auth.route';
-import cors, { CorsOptions } from 'cors';
-import socket from './socket';
-import { Server as socketServer } from 'socket.io';
-import session from 'express-session';
 import dotenv from 'dotenv';
 import path from 'path';
+import session from 'express-session';
+import socket from './socket';
+import { Server as socketServer } from 'socket.io';
 
 // dotenv
 dotenv.config({
@@ -17,7 +17,7 @@ dotenv.config({
 // variables
 const port = process.env.PORT || 3000;
 const corsOptions: CorsOptions = {
-  origin: ['http://localhost:3000', 'https://localhost:3000'],
+  origin: ['http://localhost:3000', 'https://localhost:3000', 'https://code-share-service.vercel.app'],
   credentials: true,
 };
 const sessionMiddleware = session({
