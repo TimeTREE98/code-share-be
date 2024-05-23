@@ -1,4 +1,5 @@
 import express, { Request, Response, Router } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 
 const roomRouter: Router = express.Router();
 
@@ -19,6 +20,23 @@ roomRouter.get('', (req: Request, res: Response) => {
       }
 
       return res.status(200).json({ status: 'Success', data: { room: room_result } });
+    }
+  });
+});
+
+roomRouter.post('', (req: Request, res: Response) => {
+  if (!req.session.user) {
+    // request 에 session 없음, 즉, Create Room 을 할 권한이 없다.
+    return res.status(401).json({ status: 'Unauthenticated' });
+  }
+
+  // TODO: user_idx
+  req.dbConn?.execute('INSERT INTO room (idx, name) VALUES (?, ?)', [uuidv4(), req.body.name], (err, results: any[]) => {
+    if (err !== null) {
+      console.log(err);
+      return res.status(500).json({ status: 'Server Error' });
+    } else {
+      return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.' });
     }
   });
 });
