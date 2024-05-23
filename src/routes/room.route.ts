@@ -19,7 +19,7 @@ roomRouter.get('', (req: Request, res: Response) => {
         room_result.push(room);
       }
 
-      return res.status(200).json({ status: 'Success', data: { room: room_result } });
+      return res.status(200).json({ status: 'Success', data: [{ room: room_result }] });
     }
   });
 });
@@ -60,9 +60,11 @@ roomRouter.get('/:room_idx/file', (req: Request, res: Response) => {
         file_result.push(file);
       }
 
-      return res.status(200).json({ status: 'Success', data: { file: file_result } });
+      return res.status(200).json({ status: 'Success', data: [{ file: file_result }] });
     }
   });
 });
+
+
 
 export default roomRouter;
