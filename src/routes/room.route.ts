@@ -30,15 +30,18 @@ roomRouter.post('', (req: Request, res: Response) => {
     return res.status(401).json({ status: 'Unauthenticated' });
   }
 
-  // TODO: user_idx
-  req.dbConn?.execute('INSERT INTO room (idx, name) VALUES (?, ?)', [uuidv4(), req.body.name], (err, results: any[]) => {
-    if (err !== null) {
-      console.log(err);
-      return res.status(500).json({ status: 'Server Error' });
-    } else {
-      return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.' });
-    }
-  });
+  req.dbConn?.execute(
+    'INSERT INTO room (idx, name, owner_idx) VALUES (?, ?, ?)',
+    [uuidv4(), req.body.name, req.session.user.idx],
+    (err, results: any[]) => {
+      if (err !== null) {
+        console.log(err);
+        return res.status(500).json({ status: 'Server Error' });
+      } else {
+        return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.' });
+      }
+    },
+  );
 });
 
 roomRouter.get('/:room_idx/file', (req: Request, res: Response) => {
