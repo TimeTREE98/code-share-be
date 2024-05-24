@@ -30,7 +30,10 @@ authRouter.post('/login', (req: Request, res: Response) => {
       }
 
       if (same === true) {
-        req.session.user = { id: req.body.id };
+        req.session.user = {
+          idx: results[0].idx,
+          id: req.body.id,
+        };
         return res.status(200).json({ status: 'Success' });
       } else {
         return res.status(401).json({ status: 'Fail', message: '비밀번호가 일치하지 않습니다.' });

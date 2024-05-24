@@ -9,6 +9,7 @@ import path from 'path';
 import session from 'express-session';
 import socket from './socket';
 import { Server as socketServer } from 'socket.io';
+import roomRouter from './routes/room.route';
 
 // dotenv
 dotenv.config({
@@ -64,6 +65,7 @@ socket(io);
 
 // routes
 app.use('/auth', authRouter);
+app.use('/room', roomRouter);
 
 httpServer.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
