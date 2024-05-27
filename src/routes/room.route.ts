@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const roomRouter: Router = express.Router();
 
 roomRouter.get('', (req: Request, res: Response) => {
-  req.dbConn?.execute('SELECT * FROM room', (err, result: any[]) => {
+  req.dbConn?.execute('SELECT * FROM room WHERE deleted_at IS NULL', (err, result: any[]) => {
     if (err !== null) {
       console.log(err);
       return res.status(500).json({ status: 'Server Error' });
@@ -45,7 +45,7 @@ roomRouter.post('', (req: Request, res: Response) => {
 });
 
 roomRouter.get('/:room_idx/file', (req: Request, res: Response) => {
-  req.dbConn?.execute('SELECT * FROM file WHERE room_idx = ?', [req.params.room_idx], (err, results: any[]) => {
+  req.dbConn?.execute('SELECT * FROM file WHERE room_idx = ? AND deleted_at IS NULL', [req.params.room_idx], (err, results: any[]) => {
     if (err !== null) {
       console.log(err);
       return res.status(500).json({ status: 'Server Error' });
