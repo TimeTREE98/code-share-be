@@ -33,7 +33,7 @@ export default (io: Server) => {
 
             io.to(`room:${roomIdx}`).emit(
               'fileList',
-              JSON.stringify({ file: (results as any[]).map((result) => ({ idx: result.idx, name: result.name })) }),
+              JSON.stringify({ data: (results as any[]).map((result) => ({ idx: result.idx, name: result.name })) }),
             );
           } catch (err) {
             console.error(err);
