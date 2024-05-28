@@ -42,7 +42,7 @@ app.use(cors({ ...corsOptions }));
 app.use(json());
 
 // mysql
-const dbConn = mysql.createConnection({
+export const dbConn = mysql.createConnection({
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   user: process.env.DB_USER,
