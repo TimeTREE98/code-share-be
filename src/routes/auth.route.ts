@@ -42,4 +42,10 @@ authRouter.post('/login', (req: Request, res: Response) => {
   });
 });
 
+authRouter.post('/logout', (req: Request, res: Response) => {
+  req.session.destroy(() => {
+    return res.status(200).json({ status: 'Success' });
+  });
+});
+
 export default authRouter;
