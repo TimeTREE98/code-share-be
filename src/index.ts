@@ -6,10 +6,10 @@ import authRouter from './routes/auth.route';
 import dotenv from 'dotenv';
 import mysql from 'mysql2';
 import path from 'path';
+import roomRouter from './routes/room.route';
 import session from 'express-session';
 import socket from './socket';
 import { Server as socketServer } from 'socket.io';
-import roomRouter from './routes/room.route';
 
 // dotenv
 dotenv.config({
