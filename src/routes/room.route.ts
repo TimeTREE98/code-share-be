@@ -33,12 +33,12 @@ roomRouter.post('', (req: Request, res: Response) => {
   req.dbConn?.execute(
     'INSERT INTO room (idx, name, owner_idx) VALUES (?, ?, ?)',
     [uuidv4(), req.body.name, req.session.user.idx],
-    (err, results: any[]) => {
+    (err) => {
       if (err !== null) {
         console.log(err);
         return res.status(500).json({ status: 'Server Error' });
       } else {
-        return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.' });
+        return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.', room_name: req.body.name });
       }
     },
   );
