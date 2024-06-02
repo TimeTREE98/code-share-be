@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const roomRouter: Router = express.Router();
 
 roomRouter.get('', (req: Request, res: Response) => {
-  req.dbConn?.execute('SELECT * FROM room WHERE deleted_at IS NULL', (err, result: any[]) => {
+  req.dbConn?.execute('SELECT * FROM room WHERE deleted_at IS NULL ORDER BY created_at DESC', (err, result: any[]) => {
     if (err !== null) {
       console.log(err);
       return res.status(500).json({ status: 'Server Error' });
@@ -46,7 +46,7 @@ roomRouter.post('', (req: Request, res: Response) => {
 });
 
 roomRouter.get('/:room_idx/file', (req: Request, res: Response) => {
-  req.dbConn?.execute('SELECT * FROM file WHERE room_idx = ? AND deleted_at IS NULL', [req.params.room_idx], (err, results: any[]) => {
+  req.dbConn?.execute('SELECT * FROM file WHERE room_idx = ? AND deleted_at IS NULL ORDER BY created_at DESC', [req.params.room_idx], (err, results: any[]) => {
     if (err !== null) {
       console.log(err);
       return res.status(500).json({ status: 'Server Error' });
@@ -65,5 +65,27 @@ roomRouter.get('/:room_idx/file', (req: Request, res: Response) => {
     }
   });
 });
+
+// roomRouter.post('/:room_idx/file', (req: Request, res: Response) => {
+//   if (!req.session.user) {
+//     // request 에 session 없음, 즉, Create file 을 할 권한이 없다.
+//     return res.status(401).json({ status: 'Unauthenticated' });
+//   }
+
+  
+
+//   req.dbConn?.execute(
+//     'INSERT INTO file (idx, name, room_idx) VALUES (?, ?, ?)',
+//     [uuidv4(), req.body.name, req.session.room.idx],
+//     (err) => {
+//       if (err !== null) {
+//         console.log(err);
+//         return res.status(500).json({ status: 'Server Error' });
+//       } else {
+//         return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.', file_name: req.body.name });
+//       }
+//     },
+//   );
+// });
 
 export default roomRouter;
