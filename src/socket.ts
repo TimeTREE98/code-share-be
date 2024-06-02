@@ -51,7 +51,7 @@ export default (io: Server) => {
 
       socket.join(`file:${fileIdx}`);
       try {
-        const [results] = await dbConn.promise().execute('SELECT code FROM file WHERE file_idx = ?', [fileIdx]);
+        const [results] = await dbConn.promise().execute('SELECT code FROM file WHERE idx = ?', [fileIdx]);
         socket.emit('listenCode', JSON.stringify({ code: (results as any[])[0].code }));
       } catch (err) {
         console.error(err);
