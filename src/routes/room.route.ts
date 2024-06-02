@@ -30,15 +30,16 @@ roomRouter.post('', (req: Request, res: Response) => {
     return res.status(401).json({ status: 'Unauthenticated' });
   }
 
+  const uuid = uuidv4();
   req.dbConn?.execute(
     'INSERT INTO room (idx, name, owner_idx) VALUES (?, ?, ?)',
-    [uuidv4(), req.body.name, req.session.user.idx],
+    [uuid, req.body.name, req.session.user.idx],
     (err) => {
       if (err !== null) {
         console.log(err);
         return res.status(500).json({ status: 'Server Error' });
       } else {
-        return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.', room_name: req.body.name });
+        return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.', data: { idx: uuid, name: req.body.name }});
       }
     },
   );
