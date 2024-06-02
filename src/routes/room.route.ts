@@ -66,26 +66,4 @@ roomRouter.get('/:room_idx/file', (req: Request, res: Response) => {
   });
 });
 
-// roomRouter.post('/:room_idx/file', (req: Request, res: Response) => {
-//   if (!req.session.user) {
-//     // request 에 session 없음, 즉, Create file 을 할 권한이 없다.
-//     return res.status(401).json({ status: 'Unauthenticated' });
-//   }
-
-  
-
-//   req.dbConn?.execute(
-//     'INSERT INTO file (idx, name, room_idx) VALUES (?, ?, ?)',
-//     [uuidv4(), req.body.name, req.session.room.idx],
-//     (err) => {
-//       if (err !== null) {
-//         console.log(err);
-//         return res.status(500).json({ status: 'Server Error' });
-//       } else {
-//         return res.status(200).json({ status: 'Success', message: '정상적으로 생성되었습니다.', file_name: req.body.name });
-//       }
-//     },
-//   );
-// });
-
 export default roomRouter;
