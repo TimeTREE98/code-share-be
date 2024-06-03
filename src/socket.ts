@@ -29,7 +29,7 @@ export default (io: Server) => {
               await dbConn.promise().execute('UPDATE file SET deleted_at = NOW() WHERE idx = ?', [data.idx]);
             }
 
-            const [results] = await dbConn.promise().execute('SELECT * FROM file WHERE room_idx = ? AND deleted_at IS NULL', [roomIdx]);
+            const [results] = await dbConn.promise().execute('SELECT * FROM file WHERE room_idx = ? AND deleted_at IS NULL ORDER BY created_at DESC', [roomIdx]);
 
             io.to(`room:${roomIdx}`).emit(
               'fileList',
@@ -51,7 +51,7 @@ export default (io: Server) => {
 
       socket.join(`file:${fileIdx}`);
       try {
-        const [results] = await dbConn.promise().execute('SELECT code FROM file WHERE idx = ?', [fileIdx]);
+        const [results] = await dbConn.promise().execute('SELECT code FROM file WHERE idx = ? ORDER BY created_at DESC', [fileIdx]);
         socket.emit('listenCode', JSON.stringify({ code: (results as any[])[0].code }));
       } catch (err) {
         console.error(err);
